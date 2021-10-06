@@ -1,0 +1,20 @@
+{
+  "name": "github-auth-generator",
+  "version": "1.0.0",
+  "description": "Generator for various kinds of GitHub access tokens",
+  "main": "src/index.js",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "debug": "^4.3.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "commander": "^8.2.0"
+  },
+  "scripts": {
+    "start": "node src/bin.js"
+  },
+  "author": "Ricky Cook <github@auto.thatpanda.com>",
+  "license": "ISC"
+}
