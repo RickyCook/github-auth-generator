@@ -45,7 +45,8 @@ async function run() {
     } else {
       //core.setSecret(output);
     }
-    core.setOutput('token', output);
+    //core.setOutput('token', output);
+    core.setOutput('token', 'fake');
   } catch (error) {
     core.setFailed(error.message);
   }
