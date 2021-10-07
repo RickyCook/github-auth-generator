@@ -41,12 +41,11 @@ async function run() {
     if (authorization) {
       const token = output.trim().replace(/^[^ ]+ +/, '');
       log('Authorization header prefix: %s', output.trim().split(' ')[0]);
-      //core.setSecret(token);
+      core.setSecret(token);
     } else {
-      //core.setSecret(output);
+      core.setSecret(output);
     }
-    //core.setOutput('token', output);
-    core.setOutput('token', 'fake');
+    core.setOutput('token', output);
   } catch (error) {
     core.setFailed(error.message);
   }
