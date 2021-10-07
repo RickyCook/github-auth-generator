@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const generate = require('./index');
-const { setDebug } = require('./log');
+const { setDebug, log } = require('./log');
 
 async function run() {
   try {
@@ -40,6 +40,7 @@ async function run() {
     const output = await fn(opts);
     if (authorization) {
       const token = output.trim().replace(/^[^ ]+ +/, '');
+      log('Authorization header prefix: %s', output.trim().split(' ')[0]);
       core.setSecret(token);
     } else {
       core.setSecret(output);
