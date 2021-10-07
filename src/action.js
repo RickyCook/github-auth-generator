@@ -36,7 +36,14 @@ async function run() {
     }
 
     core.info('Generating token');
-    core.setOutput('token', await fn(opts));
+    const output = await fn(opts);
+    if (tokenType.endsWith('Authorization')) {
+      const token = output.trim().replace(/^[^ ]+ +/, '');
+      core.setSecret(token);
+    } else {
+      core.setSecret(output);
+    }
+    core.setOutput('token', output);
   } catch (error) {
     core.setFailed(error.message);
   }
