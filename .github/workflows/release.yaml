@@ -15,3 +15,23 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish
+  Docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👾 Check out repository code
+        uses: actions/checkout@v2
+      - name: 📦 Build
+        run: |
+          docker build \
+            --build-arg NODE_VERSION=14.17.6 \
+            --tag thatpanda/github-auth-generator:$(jq -r .version package.json) \
+            .
+      - name: 🏷 Tag latest
+        run: |
+          docker tag \
+            thatpanda/github-auth-generator:$(jq -r .version package.json) \
+            thatpanda/github-auth-generator:latest
+      - name: 🚀 Push version tagged
+        run: docker push thatpanda/github-auth-generator:$(jq -r .version package.json)
+      - name: 🚀 Push latest tagged
+        run: docker push thatpanda/github-auth-generator:latest
