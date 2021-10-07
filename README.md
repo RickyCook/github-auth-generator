@@ -41,7 +41,7 @@ After adding your app, add the private key as a repo secret
 ```yaml
 - id: token
   name: Generate authorization
-  uses: RickyCook/github-auth-generator@1.1.1
+  uses: RickyCook/github-auth-generator@1.1.2
   with:
     tokenType: installation
     authorization: true
@@ -122,7 +122,7 @@ curl -H "Authorization:$token" https://api.github.com/repos/myorg/privaterepo
 ```
 token="$(
   docker run --rm -v /tmp/myapp.2020-10-04.private-key.pem:/key.pem \
-  thatpanda/github-auth-generator:1.1.1 \
+  thatpanda/github-auth-generator:1.1.2 \
   installation \
     --authorization \
     --appId deadbeef \
