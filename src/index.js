@@ -101,7 +101,7 @@ exports.createInstallationToken = async opts => {
       } else {
         logTrace('Installation %d has no account object', i.id);
       }
-      if (i.account && i.account.type === 'Organization' && i.account.login === orgName) {
+      if (i.account && i.account.login === orgName) {
         return true;
       }
     });
