@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: 👾 Check out repository code
         uses: actions/checkout@v2
+      - name: 📡 Pull latest
+        run: docker pull thatpanda/github-auth-generator:latest
+        continue-on-error: true
       - name: 📦 Build
         run: |
           docker build \
