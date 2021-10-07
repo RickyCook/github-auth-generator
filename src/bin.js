@@ -3,16 +3,18 @@ const { program, Command } = require('commander');
 const {
   ArgumentError,
   createAppToken,
+  createAppAuthorization,
   createInstallationToken,
+  createInstallationAuthorization,
   createRepoRunnerRegistrationToken,
   createOrgRunnerRegistrationToken,
 } = require('./index');
 const { setDebug } = require('./log');
 
-const createAction = fn => async opts => {
+const createAction = (tokenFn, authFn) => async opts => {
   try {
     setDebug(opts.debug);
-    console.log(await fn(opts));
+    console.log(await (opts.authorization ? authFn(opts) : tokenFn(opts)));
   } catch(err) {
     if (opts.debug) {
       console.error(err);
@@ -22,14 +24,18 @@ const createAction = fn => async opts => {
     process.exit(1);
   }
 }
-const appTokenAct = createAction(createAppToken);
-const installationTokenAct = createAction(createInstallationToken);
+const appTokenAct = createAction(createAppToken, createAppAuthorization);
+const installationTokenAct = createAction(createInstallationToken, createInstallationAuthorization);
 const repoRunnerTokenAct = createAction(createRepoRunnerRegistrationToken);
 const orgRunnerTokenAct = createAction(createOrgRunnerRegistrationToken);
 
 const addDebugArgs = cmd => (
   cmd
     .option('--debug', 'turn on debug outputs')
+)
+const addAuthorizationArgs = cmd => (
+  cmd
+    .option('--authorization', 'authorization header mode')
 )
 const addAppTokenArgs = cmd => (
   cmd
@@ -64,6 +70,7 @@ const appTokenCmd = program
   .command('app-token')
   .description('create an app JWT')
 addDebugArgs(appTokenCmd);
+addAuthorizationArgs(appTokenCmd);
 addAppTokenArgs(appTokenCmd);
 appTokenCmd.action(appTokenAct);
 
@@ -71,6 +78,7 @@ const installationTokenCmd = program
   .command('installation-token')
   .description('create an installation token')
 addDebugArgs(installationTokenCmd);
+addAuthorizationArgs(installationTokenCmd);
 addAppTokenArgs(installationTokenCmd);
 addInstallationTokenArgs(installationTokenCmd);
 addOrgNameArgs(installationTokenCmd);

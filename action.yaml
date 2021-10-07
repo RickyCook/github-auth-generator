@@ -8,6 +8,10 @@ inputs:
     description: toggle debug log output
     required: false
     default: false
+  authorization:
+    description: toggle authorization mode
+    required: false
+    default: false
   appId:
     description: GitHub app ID
     required: false

@@ -5,6 +5,7 @@ const { setDebug } = require('./log');
 async function run() {
   try {
     const tokenType = core.getInput('tokenType', { required: true });
+    const authorization = core.getinput('authorization');
     setDebug(core.getInput('debug'));
     const opts = {};
     for (const key of [
@@ -15,22 +16,20 @@ async function run() {
 
     let fn;
     switch(tokenType) {
-      case 'appToken':
-        fn = generate.createAppToken;
+      case 'app':
+        fn = authorization ?
+          generate.createAppToken : generate.createAppAuthorization;
         break;
-      case 'appAuthorization':
-        fn = generate.createAppAuthorization;
+      case 'installation':
+        fn = authorization ?
+          generate.createInstallationToken : generate.createInstallationAuthorization;
         break;
-      case 'installationToken':
-        fn = generate.createInstallationToken;
-        break;
-      case 'installationAuthorization':
-        fn = generate.createInstallationAuthorization;
-        break;
-      case 'orgRunnerRegistrationToken':
+      case 'orgRunnerRegistration':
+        if (authorization) throw new Error('Authorization mode not supported for runner tokens');
         fn = generate.createOrgRunnerRegistrationToken;
         break;
-      case 'repoRunnerRegistrationToken':
+      case 'repoRunnerRegistration':
+        if (authorization) throw new Error('Authorization mode not supported for runner tokens');
         fn = generate.createRepoRunnerRegistrationToken;
         break;
       default:
@@ -39,7 +38,7 @@ async function run() {
 
     core.info('Generating token');
     const output = await fn(opts);
-    if (tokenType.endsWith('Authorization')) {
+    if (authorization) {
       const token = output.trim().replace(/^[^ ]+ +/, '');
       core.setSecret(token);
     } else {
