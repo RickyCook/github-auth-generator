@@ -3,13 +3,36 @@
 A JavaScript package, GitHub Action, and CLI tool for generating various kinds
 of GitHub authentication tokens, from other kinds of authentication tokens.
 
-## Types of tokens
+## Parameters
 
-- **App token** for "GitHub App" type apps - JWTs used for interacting with app APIs only
-- **Installation token** for "GitHub App" type apps - Generated tokens for interacting with most of the GitHub API - Generated from an app token, and scoped to organization/user/etc
-- **Organization runner registration token** for registering a GitHub Actions Runner with an organization
-- **Repository runner registration token** for registering a GitHub Actions Runner with a repository
--
+- Token types (`tokenType` in GitHub Actions, command for CLI, function prefix for JS library)
+  - `app` for "GitHub App" type apps - JWTs used for interacting with app APIs only
+  - `installation` for "GitHub App" type apps - Generated tokens for interacting with most of the GitHub API - Generated from an app token, and scoped to organization/user/etc
+  - `orgRunnerRegistration` for registering a GitHub Actions Runner with an organization
+  - `repoRunnerRegistration` for registering a GitHub Actions Runner with a repository
+- Options
+  - `debug`: turn on debug outputs (`true`/`false`, or CLI flag)
+  - `authorization`: authorization header mode outputs a valid `Authorization` header value (`true`/`false`, CLI flag, or function suffix for JS library)
+  - `appId`: GitHub app ID
+  - `privateKey`: private key data for the GitHub app (not available on the CLI)
+  - `privateKeyPath`: path to the private key file for the GitHub app
+  - `installationId`: installation ID for the app
+  - `orgName`: organization name to act on
+  - `repoName`: full name of the repository to act on
+  - `personalAccessToken`: personal access token to use for generation
+
+### Operation-dependant options
+
+Most options are optional, and all functions will show an error if a full set
+of values aren't available. For example:
+- to get a repo runner token you can:
+  - supply a `personalAccessToken`
+  - supply a `appId`, and one of `privateKey` or `privateKeyPath`
+- to get an installation token you can:
+  - supply an `installationId`
+  - supply an `orgName` (installations are searched for the org name)
+  - supply a `repoName` (installations are searched for the org name)
+
 ## Use as GitHub Action
 
 ### Request repo metadata from an app private key
