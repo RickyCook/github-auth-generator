@@ -5,7 +5,7 @@ const uniq = require('lodash/uniq');
 const flatten = require('lodash/flatten');
 const { promisify } = require('util');
 
-const rootLog = require('./log');
+const { log: rootLog } = require('./log');
 
 const defaultApiPrefix = 'https://api.github.com';
 

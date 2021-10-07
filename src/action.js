@@ -1,9 +1,11 @@
 const core = require('@actions/core');
 const generate = require('./index');
+const { setDebug } = require('./log');
 
 async function run() {
   try {
     const tokenType = core.getInput('tokenType', { required: true });
+    setDebug(core.getInput('debug'));
     const opts = {};
     for (const key of [
       'appId', 'privateKey', 'installationId', 'orgName', 'repoName', 'personalAccessToken',

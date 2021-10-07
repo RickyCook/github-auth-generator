@@ -4,6 +4,10 @@ inputs:
   tokenType:
     description: type of token to generate
     required: true
+  debug:
+    description: toggle debug log output
+    required: false
+    default: false
   appId:
     description: GitHub app ID
     required: false
