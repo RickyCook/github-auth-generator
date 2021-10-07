@@ -1,8 +1,9 @@
 const axios = require('axios');
-const fs = require('fs/promises');
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const uniq = require('lodash/uniq');
 const flatten = require('lodash/flatten');
+const { promisify } = require('util');
 
 const rootLog = require('./log');
 
@@ -39,6 +40,9 @@ const tryCreateTokens = async (fns, opts) => {
   );
 };
 
+// GitHub actions doesn't support fs/promises
+const readFile = promisify(fs.readFile);
+
 class ArgumentError extends Error {
   constructor(msg, fields) {
     super(msg);
@@ -59,7 +63,7 @@ exports.createAppToken = async opts => {
   log('Loading PEM');
   const pem = privateKey
     ? privateKey
-    : (await fs.readFile(privateKeyPath)).toString();
+    : (await readFile(privateKeyPath)).toString();
 
   log('Creating app token');
   return jwt.sign({}, pem, {
