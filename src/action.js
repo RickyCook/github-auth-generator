@@ -5,7 +5,7 @@ const { setDebug } = require('./log');
 async function run() {
   try {
     const tokenType = core.getInput('tokenType', { required: true });
-    const authorization = core.getinput('authorization');
+    const authorization = core.getInput('authorization');
     setDebug(core.getInput('debug'));
     const opts = {};
     for (const key of [
