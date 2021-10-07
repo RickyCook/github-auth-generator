@@ -67,7 +67,7 @@ const root = program
   )
 
 const appTokenCmd = program
-  .command('app-token')
+  .command('app')
   .description('create an app JWT')
 addDebugArgs(appTokenCmd);
 addAuthorizationArgs(appTokenCmd);
@@ -75,7 +75,7 @@ addAppTokenArgs(appTokenCmd);
 appTokenCmd.action(appTokenAct);
 
 const installationTokenCmd = program
-  .command('installation-token')
+  .command('installation')
   .description('create an installation token')
 addDebugArgs(installationTokenCmd);
 addAuthorizationArgs(installationTokenCmd);
@@ -86,7 +86,7 @@ addRepoNameArgs(installationTokenCmd);
 installationTokenCmd.action(installationTokenAct);
 
 const repoRunnerTokenCmd = program
-  .command('repo-runner-token')
+  .command('repoRunnerRegistration')
   .description('create a token to manage self-hosted runners on a repo')
 addDebugArgs(repoRunnerTokenCmd);
 addAppTokenArgs(repoRunnerTokenCmd);
@@ -97,7 +97,7 @@ addPersonalAccessTokenArgs(repoRunnerTokenCmd);
 repoRunnerTokenCmd.action(repoRunnerTokenAct);
 
 const orgRunnerTokenCmd = program
-  .command('org-runner-token')
+  .command('orgRunnerRegistration')
   .description('create a token to manage self-hosted runners on an org')
 addDebugArgs(orgRunnerTokenCmd);
 addAppTokenArgs(orgRunnerTokenCmd);
