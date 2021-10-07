@@ -86,12 +86,21 @@ exports.createInstallationToken = async opts => {
     throw new ArgumentError('Must give either installationId, orgName, or repoName', ['installationId', 'orgName', 'repoName']);
 
   const log = parentLog.extend('createInstallationToken');
+  const logTrace = log.extend('trace');
 
   log('Getting installations');
   const client = createClient({ authorization: await exports.createAppAuthorization(opts) });
   if (!installationId) {
+    log('Getting installation from org name %s', orgName);
     const installations = (await client.get('/app/installations')).data;
+    logTrace('Installations: %O', installations);
     const installation = installations.find(i => {
+      if (i.account) {
+        logTrace('Installation %d has account type %s', i.id, i.account.type);
+        logTrace('Installation %d has account login %s', i.id, i.account.login);
+      } else {
+        logTrace('Installation %d has no account object', i.id);
+      }
       if (i.account && i.account.type === 'Organization' && i.account.login === orgName) {
         return true;
       }
