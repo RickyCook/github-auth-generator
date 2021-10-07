@@ -16,5 +16,20 @@
     "start": "node src/bin.js"
   },
   "author": "Ricky Cook <github@auto.thatpanda.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickyCook/github-auth-generator.git"
+  },
+  "keywords": [
+    "github",
+    "token",
+    "auth",
+    "runner",
+    "actions"
+  ],
+  "bugs": {
+    "url": "https://github.com/RickyCook/github-auth-generator/issues"
+  },
+  "homepage": "https://github.com/RickyCook/github-auth-generator#readme"
 }
