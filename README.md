@@ -1,6 +1,7 @@
 # GitHub Auth Generator
 
-A JavaScript package, and CLI tool for generating various kinds of GitHub authentication tokens, from other kinds of authentication tokens.
+A JavaScript package, GitHub Action, and CLI tool for generating various kinds
+of GitHub authentication tokens, from other kinds of authentication tokens.
 
 ## Types of tokens
 
@@ -8,6 +9,42 @@ A JavaScript package, and CLI tool for generating various kinds of GitHub authen
 - **Installation token** for "GitHub App" type apps - Generated tokens for interacting with most of the GitHub API - Generated from an app token, and scoped to organization/user/etc
 - **Organization runner registration token** for registering a GitHub Actions Runner with an organization
 - **Repository runner registration token** for registering a GitHub Actions Runner with a repository
+-
+## Use as GitHub Action
+
+### Request repo metadata from an app private key
+
+After adding your app, add the private key as a repo secret
+```yaml
+- id: token
+  name: Generate authorization
+  uses: RickyCook/github-auth-generator@1.1.0
+  with:
+    tokenType: installation
+    authorization: true
+    appId: 'deadbeef'
+    privateKey: ${{ secrets.appPrivateKey }}
+    repoName: myorg/privaterepo
+- name: Check token works
+  env:
+    AUTH: ${{ steps.token.outputs.token }}
+  run: curl -H "Authorization:$AUTH" https://api.github.com/repos/myorg/privaterepo
+```
+
+### Inputs
+
+- `tokenType` - what type of token to generate
+  - `app` - create an app JWT
+  - `installation` - create an installation token
+  - `orgRunnerRegistration` - create a token to manage self-hosted runners on a repo
+  - `repoRunnerRegistration` - create a token to manage self-hosted runners on an org
+- `debug` - turn on debug outputs
+- `authorization` - turn on "authorization" mode to return the value of an authorization header for curl/httpie/etc
+- other inputs that match the lib/CLI opts (`appId`, `privateKey`, etc)
+
+### Outputs
+
+- `token` - the generated token or authorization header value
 
 ## Use as a library
 
