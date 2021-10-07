@@ -1,1 +1,1 @@
-module.exports = require('debug')('githubAuthCenerator');
+module.exports = require('debug')('githubAuthGenerator');
