@@ -96,13 +96,16 @@ exports.createInstallationToken = async opts => {
     logTrace('Installations: %O', installations);
     const installation = installations.find(i => {
       if (i.account) {
-        logTrace('Installation %d has account type %s', i.id, i.account.type);
-        logTrace('Installation %d has account login %s', i.id, i.account.login);
+        logTrace('Installation %s has account type %s', i.id, i.account.type);
+        logTrace('Installation %s has account login %s', i.id, i.account.login);
       } else {
-        logTrace('Installation %d has no account object', i.id);
+        logTrace('Installation %s has no account object', i.id);
       }
       if (i.account && i.account.login === orgName) {
+        logTrace('Matched installation %s', i.id);
         return true;
+      } else {
+        logTrace('No match for installation %s', i.id);
       }
     });
     if (!installation) throw new Error('Could not find installation');
