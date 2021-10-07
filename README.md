@@ -18,7 +18,7 @@ After adding your app, add the private key as a repo secret
 ```yaml
 - id: token
   name: Generate authorization
-  uses: RickyCook/github-auth-generator@1.1.0
+  uses: RickyCook/github-auth-generator@1.1.1
   with:
     tokenType: installation
     authorization: true
