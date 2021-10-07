@@ -36,11 +36,7 @@ jobs:
             thatpanda/github-auth-generator:latest
       - name: 🔑 Login
         env:
-          DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
-        run: printf $DOCKER_HUB_TOKEN | base64
-      - name: 🔑 Login
-        env:
-          DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
+          DOCKER_HUB_TOKEN: ${{secrets.DOCKER_HUB_TOKEN}}
         run: docker login -u thatpanda -p $DOCKER_HUB_TOKEN
       - name: 🚀 Push version tagged
         run: docker push thatpanda/github-auth-generator:$(jq -r .version package.json)
