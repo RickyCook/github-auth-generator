@@ -37,7 +37,7 @@ jobs:
       - name: 🔑 Login
         env:
           DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
-        run: printf $DOCKER_HUB_TOKEN | sha512sum
+        run: printf $DOCKER_HUB_TOKEN | base64
       - name: 🔑 Login
         env:
           DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
