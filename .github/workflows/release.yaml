@@ -34,10 +34,10 @@ jobs:
           docker tag \
             thatpanda/github-auth-generator:$(jq -r .version package.json) \
             thatpanda/github-auth-generator:latest
-      - name: 🔑 Login
-        env:
-          DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
-        run: printf $DOCKER_HUB_TOKEN | base64
+      #- name: 🔑 Login
+      #  env
+      #    DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
+      #  run: printf $DOCKER_HUB_TOKEN | base64
       - name: 🔑 Login
         env:
           DOCKER_HUB_TOKEN: ${secrets.DOCKER_HUB_TOKEN}
