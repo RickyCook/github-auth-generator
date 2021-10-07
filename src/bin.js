@@ -11,7 +11,7 @@ const { setDebug } = require('./log');
 
 const createAction = fn => async opts => {
   try {
-    opts.setDebug(opts.debug);
+    setDebug(opts.debug);
     console.log(await fn(opts));
   } catch(err) {
     if (opts.debug) {
