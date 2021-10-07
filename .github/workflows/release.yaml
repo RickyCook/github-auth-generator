@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
 jobs:
-  Release:
+  NPM:
     runs-on: ubuntu-latest
     steps:
       - name: 👾 Check out repository code
