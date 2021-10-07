@@ -18,11 +18,11 @@ async function run() {
     switch(tokenType) {
       case 'app':
         fn = authorization ?
-          generate.createAppToken : generate.createAppAuthorization;
+          generate.createAppAuthorization : generate.createAppToken;
         break;
       case 'installation':
         fn = authorization ?
-          generate.createInstallationToken : generate.createInstallationAuthorization;
+          generate.createInstallationAuthorization : generate.createInstallationToken;
         break;
       case 'orgRunnerRegistration':
         if (authorization) throw new Error('Authorization mode not supported for runner tokens');
