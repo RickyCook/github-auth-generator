@@ -1,0 +1,36 @@
+name: GitHub Auth Generator
+description: Generate various kinds of GitHub authentication tokens, from other kinds of authentication tokens
+inputs:
+  tokenType:
+    description: type of token to generate
+    required: true
+  appId:
+    description: GitHub app ID
+    required: false
+    default: null
+  privateKey:
+    description: PEM-encoded private key content for the app
+    required: false
+    default: null
+  installationId:
+    description: installation ID for the app
+    required: false
+    default: null
+  orgName:
+    description: organization name to act on
+    required: false
+    default: null
+  repoName:
+    description: repo name to act on
+    required: false
+    default: null
+  personalAccessToken:
+    description: personal access token to use for generation
+    required: false
+    default: null
+outputs:
+  token:
+    description: generated token
+runs:
+  using: node14
+  main: src/action.js

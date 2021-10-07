@@ -10,6 +10,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@actions/core": "^1.6.0",
     "commander": "^8.2.0"
   },
   "scripts": {
