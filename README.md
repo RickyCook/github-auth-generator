@@ -84,8 +84,29 @@ const repoName = 'myorg/privaterepo';
 
 ### Request repo metadata from an app private key
 ```
-token=$(node src/bin.js installation-token --appId deadbeef --privateKeyPath /tmp/myapp.2021-10-04.private-key.pem --repoName myorg/privaterepo)
-curl -H "Authorization: Bearer $token" https://api.github.com/repos/myorg/privaterepo
+token="$(
+  node src/bin.js \
+  installation-token \
+    --authorization \
+    --appId deadbeef \
+    --privateKeyPath /tmp/myapp.2021-10-04.private-key.pem \
+    --repoName myorg/privaterepo
+)"
+curl -H "Authorization:$token" https://api.github.com/repos/myorg/privaterepo
+```
+
+### Request repo metadata from an app private key (DOCKER 🐳)
+```
+token="$(
+  docker run --rm -v /tmp/myapp.2020-10-04.private-key.pem:/key.pem \
+  thatpanda/github-auth-generator:1.1.1 \
+  installation-token \
+    --authorization \
+    --appId deadbeef \
+    --privateKeyPath /key.pem \
+    --repoName myorg/privaterepo
+)"
+curl -H "Authorization:$token" https://api.github.com/repos/myorg/privaterepo
 ```
 
 ### Request a GitHub Actions Runner registration token from an app private key
