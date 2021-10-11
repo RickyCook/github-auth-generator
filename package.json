@@ -16,7 +16,7 @@
     "start": "node src/bin.js"
   },
   "author": "Ricky Cook <github@auto.thatpanda.com>",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RickyCook/github-auth-generator.git"
