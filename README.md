@@ -10,6 +10,8 @@ of GitHub authentication tokens, from other kinds of authentication tokens.
   - `installation` for "GitHub App" type apps - Generated tokens for interacting with most of the GitHub API - Generated from an app token, and scoped to organization/user/etc
   - `orgRunnerRegistration` for registering a GitHub Actions Runner with an organization
   - `repoRunnerRegistration` for registering a GitHub Actions Runner with a repository
+  - `orgRunnerRemove` for removing a GitHub Actions Runner from an organization
+  - `repoRunnerRemove` for removing a GitHub Actions Runner from a repository
 - Options
   - `debug`: turn on debug outputs (`true`/`false`, or CLI flag)
   - `authorization`: authorization header mode outputs a valid `Authorization` header value (`true`/`false`, CLI flag, or function suffix for JS library)
@@ -59,8 +61,10 @@ After adding your app, add the private key as a repo secret
 - `tokenType` - what type of token to generate
   - `app` - create an app JWT
   - `installation` - create an installation token
-  - `orgRunnerRegistration` - create a token to manage self-hosted runners on a repo
-  - `repoRunnerRegistration` - create a token to manage self-hosted runners on an org
+  - `orgRunnerRegistration` - create a token to add self-hosted runners to a repo
+  - `repoRunnerRegistration` - create a token to add self-hosted runners to an org
+  - `orgRunnerRemove` - create a token to remove self-hosted runners from a repo
+  - `repoRunnerRemove` - create a token to remove self-hosted runners from an org
 - `debug` - turn on debug outputs
 - `authorization` - turn on "authorization" mode to return the value of an authorization header for curl/httpie/etc
 - other inputs that match the lib/CLI opts (`appId`, `privateKey`, etc)

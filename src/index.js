@@ -129,7 +129,7 @@ exports.createPersonalAccessAuthorization = async opts => (
   'token ' + exports.getPersonalAccessToken(opts)
 );
 
-exports.createOrgRunnerRegistrationToken = async opts => {
+const createOrgRunnerTokenFn = suffix =>  async opts => {
   if (opts.repoName && !opts.orgName)
     opts.orgName = opts.repoName.split('/')[0];
 
@@ -137,7 +137,7 @@ exports.createOrgRunnerRegistrationToken = async opts => {
   if (!orgName) // TODO we could get this from installation
     throw new ArgumentError('Must give orgName or repoName', ['orgName', 'repoName']);
 
-  const log = parentLog.extend('createOrgRunnerRegistrationToken');
+  const log = parentLog.extend('createOrgRunnerToken').extend(suffix);
 
   const client = createClient({
     authorization: await tryCreateTokens([
@@ -145,14 +145,14 @@ exports.createOrgRunnerRegistrationToken = async opts => {
       exports.createPersonalAccessAuthorization,
     ], opts),
   });
-  log('Creating organization runner registration token');
-  return (await client.post(`/orgs/${orgName}/actions/runners/registration-token`)).data.token
+  log(`Creating organization runner ${suffix} token`);
+  return (await client.post(`/orgs/${orgName}/actions/runners/${suffix}-token`)).data.token
 };
-exports.createRepoRunnerRegistrationToken = async opts => {
+const createRepoRunnerTokenFn = suffix => async opts => {
   const { repoName, parentLog = rootLog } = opts;
   if (!repoName) throw new ArgumentError('Must give repoName', ['repoName']);
 
-  const log = parentLog.extend('createRepoRunnerRegistrationToken');
+  const log = parentLog.extend('createRepoRunnerToken').extend(suffix);
 
   const client = createClient({
     authorization: await tryCreateTokens([
@@ -160,6 +160,11 @@ exports.createRepoRunnerRegistrationToken = async opts => {
       exports.createPersonalAccessAuthorization,
     ], opts),
   });
-  log('Creating repo runner registration token');
-  return (await client.post(`/repos/${repoName}/actions/runners/registration-token`)).data.token
+  log(`Creating repo runner ${suffix} token`);
+  return (await client.post(`/repos/${repoName}/actions/runners/${suffix}-token`)).data.token
 };
+
+exports.createOrgRunnerRegistrationToken = createOrgRunnerTokenFn('registration');
+exports.createRepoRunnerRegistrationToken = createRepoRunnerTokenFn('registration');
+exports.createOrgRunnerRemoveToken = createOrgRunnerTokenFn('remove');
+exports.createRepoRunnerRemoveToken = createRepoRunnerTokenFn('remove');
