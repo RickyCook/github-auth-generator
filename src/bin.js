@@ -8,6 +8,8 @@ const {
   createInstallationAuthorization,
   createRepoRunnerRegistrationToken,
   createOrgRunnerRegistrationToken,
+  createRepoRunnerRemoveToken,
+  createOrgRunnerRemoveToken,
 } = require('./index');
 const { setDebug } = require('./log');
 
@@ -26,8 +28,10 @@ const createAction = (tokenFn, authFn) => async opts => {
 }
 const appTokenAct = createAction(createAppToken, createAppAuthorization);
 const installationTokenAct = createAction(createInstallationToken, createInstallationAuthorization);
-const repoRunnerTokenAct = createAction(createRepoRunnerRegistrationToken);
-const orgRunnerTokenAct = createAction(createOrgRunnerRegistrationToken);
+const repoRunnerRegistrationTokenAct = createAction(createRepoRunnerRegistrationToken);
+const orgRunnerRegistrationTokenAct = createAction(createOrgRunnerRegistrationToken);
+const repoRunnerRemoveTokenAct = createAction(createRepoRunnerRemoveToken);
+const orgRunnerRemoveTokenAct = createAction(createOrgRunnerRemoveToken);
 
 const addDebugArgs = cmd => (
   cmd
@@ -85,26 +89,48 @@ addOrgNameArgs(installationTokenCmd);
 addRepoNameArgs(installationTokenCmd);
 installationTokenCmd.action(installationTokenAct);
 
-const repoRunnerTokenCmd = program
+const repoRunnerRegistrationTokenCmd = program
   .command('repoRunnerRegistration')
-  .description('create a token to manage self-hosted runners on a repo')
-addDebugArgs(repoRunnerTokenCmd);
-addAppTokenArgs(repoRunnerTokenCmd);
-addInstallationTokenArgs(repoRunnerTokenCmd);
-addOrgNameArgs(repoRunnerTokenCmd);
-addRepoNameArgs(repoRunnerTokenCmd);
-addPersonalAccessTokenArgs(repoRunnerTokenCmd);
-repoRunnerTokenCmd.action(repoRunnerTokenAct);
+  .description('create a token to add self-hosted runners to a repo')
+addDebugArgs(repoRunnerRegistrationTokenCmd);
+addAppTokenArgs(repoRunnerRegistrationTokenCmd);
+addInstallationTokenArgs(repoRunnerRegistrationTokenCmd);
+addOrgNameArgs(repoRunnerRegistrationTokenCmd);
+addRepoNameArgs(repoRunnerRegistrationTokenCmd);
+addPersonalAccessTokenArgs(repoRunnerRegistrationTokenCmd);
+repoRunnerRegistrationTokenCmd.action(repoRunnerRegistrationTokenAct);
 
-const orgRunnerTokenCmd = program
+const orgRunnerRegistrationTokenCmd = program
   .command('orgRunnerRegistration')
-  .description('create a token to manage self-hosted runners on an org')
-addDebugArgs(orgRunnerTokenCmd);
-addAppTokenArgs(orgRunnerTokenCmd);
-addInstallationTokenArgs(orgRunnerTokenCmd);
-addOrgNameArgs(orgRunnerTokenCmd);
-addRepoNameArgs(orgRunnerTokenCmd);
-addPersonalAccessTokenArgs(orgRunnerTokenCmd);
-orgRunnerTokenCmd.action(orgRunnerTokenAct);
+  .description('create a token to add self-hosted runners to an org')
+addDebugArgs(orgRunnerRegistrationTokenCmd);
+addAppTokenArgs(orgRunnerRegistrationTokenCmd);
+addInstallationTokenArgs(orgRunnerRegistrationTokenCmd);
+addOrgNameArgs(orgRunnerRegistrationTokenCmd);
+addRepoNameArgs(orgRunnerRegistrationTokenCmd);
+addPersonalAccessTokenArgs(orgRunnerRegistrationTokenCmd);
+orgRunnerRegistrationTokenCmd.action(orgRunnerRegistrationTokenAct);
+
+const repoRunnerRemoveTokenCmd = program
+  .command('repoRunnerRemove')
+  .description('create a token to remove self-hosted runners from a repo')
+addDebugArgs(repoRunnerRemoveTokenCmd);
+addAppTokenArgs(repoRunnerRemoveTokenCmd);
+addInstallationTokenArgs(repoRunnerRemoveTokenCmd);
+addOrgNameArgs(repoRunnerRemoveTokenCmd);
+addRepoNameArgs(repoRunnerRemoveTokenCmd);
+addPersonalAccessTokenArgs(repoRunnerRemoveTokenCmd);
+repoRunnerRemoveTokenCmd.action(repoRunnerRemoveTokenAct);
+
+const orgRunnerRemoveTokenCmd = program
+  .command('orgRunnerRemove')
+  .description('create a token to remove self-hosted runners from an org')
+addDebugArgs(orgRunnerRemoveTokenCmd);
+addAppTokenArgs(orgRunnerRemoveTokenCmd);
+addInstallationTokenArgs(orgRunnerRemoveTokenCmd);
+addOrgNameArgs(orgRunnerRemoveTokenCmd);
+addRepoNameArgs(orgRunnerRemoveTokenCmd);
+addPersonalAccessTokenArgs(orgRunnerRemoveTokenCmd);
+orgRunnerRemoveTokenCmd.action(orgRunnerRemoveTokenAct);
 
 program.parse(process.argv);
