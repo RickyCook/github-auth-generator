@@ -164,12 +164,9 @@ const createRepoRunnerTokenFn = suffix => async opts => {
   return (await client.post(`/repos/${repoName}/actions/runners/${suffix}-token`)).data.token
 };
 const createEntRunnerTokenFn = suffix =>  async opts => {
-  if (opts.repoName && !opts.entName)
-    opts.entName = opts.repoName.split('/')[0];
-
   const { entName, parentLog = rootLog } = opts;
   if (!entName) // TODO we could get this from installation
-    throw new ArgumentError('Must give entName or repoName', ['entName', 'repoName']);
+    throw new ArgumentError('Must give entName', ['entName']);
 
   const log = parentLog.extend('createEntRunnerToken').extend(suffix);
 
