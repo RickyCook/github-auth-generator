@@ -163,8 +163,26 @@ const createRepoRunnerTokenFn = suffix => async opts => {
   log(`Creating repo runner ${suffix} token`);
   return (await client.post(`/repos/${repoName}/actions/runners/${suffix}-token`)).data.token
 };
+const createEntRunnerTokenFn = suffix =>  async opts => {
+  const { entName, parentLog = rootLog } = opts;
+  if (!entName) // TODO we could get this from installation
+    throw new ArgumentError('Must give entName', ['entName']);
+
+  const log = parentLog.extend('createEntRunnerToken').extend(suffix);
+
+  const client = createClient({
+    authorization: await tryCreateTokens([
+      exports.createInstallationAuthorization,
+      exports.createPersonalAccessAuthorization,
+    ], opts),
+  });
+  log(`Creating enterprise runner ${suffix} token`);
+  return (await client.post(`/enterprises/${entName}/actions/runners/${suffix}-token`)).data.token
+};
 
 exports.createOrgRunnerRegistrationToken = createOrgRunnerTokenFn('registration');
 exports.createRepoRunnerRegistrationToken = createRepoRunnerTokenFn('registration');
+exports.createEntRunnerRegistrationToken = createEntRunnerTokenFn('registration');
 exports.createOrgRunnerRemoveToken = createOrgRunnerTokenFn('remove');
 exports.createRepoRunnerRemoveToken = createRepoRunnerTokenFn('remove');
+exports.createEntRunnerRemoveToken = createEntRunnerTokenFn('remove');

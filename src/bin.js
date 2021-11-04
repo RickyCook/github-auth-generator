@@ -8,8 +8,10 @@ const {
   createInstallationAuthorization,
   createRepoRunnerRegistrationToken,
   createOrgRunnerRegistrationToken,
+  createEntRunnerRegistrationToken,
   createRepoRunnerRemoveToken,
   createOrgRunnerRemoveToken,
+  createEntRunnerRemoveToken,
 } = require('./index');
 const { setDebug } = require('./log');
 
@@ -30,8 +32,10 @@ const appTokenAct = createAction(createAppToken, createAppAuthorization);
 const installationTokenAct = createAction(createInstallationToken, createInstallationAuthorization);
 const repoRunnerRegistrationTokenAct = createAction(createRepoRunnerRegistrationToken);
 const orgRunnerRegistrationTokenAct = createAction(createOrgRunnerRegistrationToken);
+const entRunnerRegistrationTokenAct = createAction(createEntRunnerRegistrationToken);
 const repoRunnerRemoveTokenAct = createAction(createRepoRunnerRemoveToken);
 const orgRunnerRemoveTokenAct = createAction(createOrgRunnerRemoveToken);
+const entRunnerRemoveTokenAct = createAction(createEntRunnerRemoveToken);
 
 const addDebugArgs = cmd => (
   cmd
@@ -111,6 +115,17 @@ addRepoNameArgs(orgRunnerRegistrationTokenCmd);
 addPersonalAccessTokenArgs(orgRunnerRegistrationTokenCmd);
 orgRunnerRegistrationTokenCmd.action(orgRunnerRegistrationTokenAct);
 
+const entRunnerRegistrationTokenCmd = program
+  .command('entRunnerRegistration')
+  .description('create a token to add self-hosted runners to an enterprise')
+addDebugArgs(entRunnerRegistrationTokenCmd);
+addAppTokenArgs(entRunnerRegistrationTokenCmd);
+addInstallationTokenArgs(entRunnerRegistrationTokenCmd);
+addOrgNameArgs(entRunnerRegistrationTokenCmd);
+addRepoNameArgs(entRunnerRegistrationTokenCmd);
+addPersonalAccessTokenArgs(entRunnerRegistrationTokenCmd);
+entRunnerRegistrationTokenCmd.action(entRunnerRegistrationTokenAct);
+
 const repoRunnerRemoveTokenCmd = program
   .command('repoRunnerRemove')
   .description('create a token to remove self-hosted runners from a repo')
@@ -132,5 +147,16 @@ addOrgNameArgs(orgRunnerRemoveTokenCmd);
 addRepoNameArgs(orgRunnerRemoveTokenCmd);
 addPersonalAccessTokenArgs(orgRunnerRemoveTokenCmd);
 orgRunnerRemoveTokenCmd.action(orgRunnerRemoveTokenAct);
+
+const entRunnerRemoveTokenCmd = program
+  .command('entRunnerRemove')
+  .description('create a token to remove self-hosted runners from an enterprise')
+addDebugArgs(entRunnerRemoveTokenCmd);
+addAppTokenArgs(entRunnerRemoveTokenCmd);
+addInstallationTokenArgs(entRunnerRemoveTokenCmd);
+addOrgNameArgs(entRunnerRemoveTokenCmd);
+addRepoNameArgs(entRunnerRemoveTokenCmd);
+addPersonalAccessTokenArgs(entRunnerRemoveTokenCmd);
+entRunnerRemoveTokenCmd.action(entRunnerRemoveTokenAct);
 
 program.parse(process.argv);

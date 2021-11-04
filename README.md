@@ -10,8 +10,10 @@ of GitHub authentication tokens, from other kinds of authentication tokens.
   - `installation` for "GitHub App" type apps - Generated tokens for interacting with most of the GitHub API - Generated from an app token, and scoped to organization/user/etc
   - `orgRunnerRegistration` for registering a GitHub Actions Runner with an organization
   - `repoRunnerRegistration` for registering a GitHub Actions Runner with a repository
+  - `entRunnerRegistration` for registering a GitHub Actions Runner with an enterprise
   - `orgRunnerRemove` for removing a GitHub Actions Runner from an organization
   - `repoRunnerRemove` for removing a GitHub Actions Runner from a repository
+  - `entRunnerRemove` for removing a GitHub Actions Runner from an enterprise
 - Options
   - `debug`: turn on debug outputs (`true`/`false`, or CLI flag)
   - `authorization`: authorization header mode outputs a valid `Authorization` header value (`true`/`false`, CLI flag, or function suffix for JS library)
@@ -21,6 +23,7 @@ of GitHub authentication tokens, from other kinds of authentication tokens.
   - `installationId`: installation ID for the app
   - `orgName`: organization name to act on
   - `repoName`: full name of the repository to act on
+  - `entName`: enterprise name to act on
   - `personalAccessToken`: personal access token to use for generation
 
 ### Operation-dependant options
@@ -33,7 +36,8 @@ of values aren't available. For example:
 - to get an installation token you can:
   - supply an `installationId`
   - supply an `orgName` (installations are searched for the org name)
-  - supply a `repoName` (installations are searched for the org name)
+  - supply a `repoName` (installations are searched for the repo name)
+  - supply a `entName` (installations are searched for the enterprise name)
 
 ## Use as GitHub Action
 
@@ -63,8 +67,10 @@ After adding your app, add the private key as a repo secret
   - `installation` - create an installation token
   - `orgRunnerRegistration` - create a token to add self-hosted runners to a repo
   - `repoRunnerRegistration` - create a token to add self-hosted runners to an org
-  - `orgRunnerRemove` - create a token to remove self-hosted runners from a repo
-  - `repoRunnerRemove` - create a token to remove self-hosted runners from an org
+  - `entRunnerRegistration` - create a token to add self-hosted runners to an enterprise
+  - `orgRunnerRemove` - create a token to remove self-hosted runners from a org
+  - `repoRunnerRemove` - create a token to remove self-hosted runners from a repo
+  - `entRunnerRemove` - create a token to remove self-hosted runners from an enterprise
 - `debug` - turn on debug outputs
 - `authorization` - turn on "authorization" mode to return the value of an authorization header for curl/httpie/etc
 - other inputs that match the lib/CLI opts (`appId`, `privateKey`, etc)

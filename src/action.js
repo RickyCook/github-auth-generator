@@ -40,6 +40,14 @@ async function run() {
         if (authorization) throw new Error('Authorization mode not supported for runner tokens');
         fn = generate.createRepoRunnerRemoveToken;
         break;
+      case 'entRunnerRegistration':
+        if (authorization) throw new Error('Authorization mode not supported for runner tokens');
+        fn = generate.createEntRunnerRegistrationToken;
+        break;
+      case 'entRunnerRemove':
+        if (authorization) throw new Error('Authorization mode not supported for runner tokens');
+        fn = generate.createEntRunnerRemoveToken;
+        break;
       default:
         throw new Error(`Unknown token type: ${tokenType}`);
     }
