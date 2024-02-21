@@ -1,14 +1,14 @@
 {
   "name": "github-auth-generator",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Generator for various kinds of GitHub access tokens",
   "main": "src/index.js",
   "dependencies": {
     "@actions/core": "^1.6.0",
-    "axios": "^0.22.0",
+    "axios": "^0.28.0",
     "commander": "^8.2.0",
     "debug": "^4.3.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {},
