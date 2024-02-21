@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 👾 Check out repository code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 14.17.6
+          node-version: 20.11.1
       - name: 🚀 Publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -19,14 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 👾 Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: 📡 Pull latest
         run: docker pull thatpanda/github-auth-generator:latest
         continue-on-error: true
       - name: 📦 Build
         run: |
           docker build \
-            --build-arg NODE_VERSION=14.17.6 \
+            --build-arg NODE_VERSION=20.11.1 \
             --tag thatpanda/github-auth-generator:$(jq -r .version package.json) \
             .
       - name: 🏷 Tag latest
